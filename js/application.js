@@ -63,6 +63,11 @@ $(document).ready(function () {
   
   
   setAndUpdatePrice ()
+
+  $('.btn.remove').on('click', function (event) {
+    $(this).closest('tr').remove();
+    setTotalPrice();
+  });
   
 
 });
