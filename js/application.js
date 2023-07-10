@@ -35,8 +35,8 @@ function updatePrice(){
 
 function setTotalPrice(){
   var total = 0;
-  $('tbody tr:has(.totalPrice)').each(function (i, ele) {
-    total += parseFloat($(ele).children('.totalPrice').text().replace('$', ''));
+  $('.totalPrice').each(function (i, ele) {
+    total += parseFloat($(ele).text().replace('$', ''));
   });
 
   $('body').find('.grandTotal').text('$' + total.toFixed(2));
@@ -52,23 +52,14 @@ function updateTotalPrice(){
   });
 }
 
-function setAndUpdatePrice (){
-  setPrice();
-  setTotalPrice();
-  updatePrice();
-  updateTotalPrice();
-}
-
-$(document).ready(function () {
-
-  setAndUpdatePrice ()
-
+function setRemoveEvent(){
   $(document).on('click', '.btn.remove', function (event) {
     $(this).closest('tr').remove();
     setTotalPrice();
   });
+}
 
-
+function setAddRowEvent(){
   $('#addButton').on('click', function (event) {
     var name = $('#nameInput input').val();
     var price = $('#priceInput input').val();
@@ -98,5 +89,19 @@ $(document).ready(function () {
 
   });
 
+}
+
+function setAndUpdatePrice (){
+  setPrice();
+  setTotalPrice();
+  updatePrice();
+  updateTotalPrice();
+}
+
+$(document).ready(function () {
+
+  setAndUpdatePrice();
+  setRemoveEvent();
+  setAddRowEvent();
   
 });
