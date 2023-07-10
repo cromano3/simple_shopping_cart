@@ -11,14 +11,20 @@ function calculateAndSetItemTotal(row){
 }
 
 function setPrice(){
+
+  var totalElements = $('tbody tr').length;
+
   $('tbody tr').each(function (i, ele) {
-    calculateAndSetItemTotal($(ele));
+    if (i !== totalElements - 1) {
+      calculateAndSetItemTotal($(ele));
+    }
   });
+
 }
 
 function updatePrice(){
   var timeout;
-  $('tr input').on('input', function () {
+  $('tr .quantity input').on('input', function () {
     var row = $(this).closest('tr');
     clearTimeout(timeout);
     timeout = setTimeout(function () {
@@ -38,7 +44,7 @@ function setTotalPrice(){
 
 function updateTotalPrice(){
   var timeout;
-  $('tr input').on('input', function () {
+  $('tr .quantity input').on('input', function () {
     clearTimeout(timeout);
     timeout = setTimeout(function () {
        setTotalPrice()
