@@ -1,15 +1,20 @@
-$(document).ready(function () {
-  
+function setPrice(){
   $('tbody tr').each(function (i, ele) {
 
     var quantity = parseFloat($(ele).find('.quantity input').val());
     var price = parseFloat($(ele).children('.price').text());
 
-    var totalPrice = quantity * price;
-    $(ele).children('.totalPrice').text(totalPrice);
+    if(isNaN(quantity) || isNaN(price)) {
+      $(ele).children('.totalPrice').text(0); 
+    }
+    else{
+      var totalPrice = quantity * price;
+      $(ele).children('.totalPrice').text(totalPrice);
+    }
 
   });
-
+}
+function updatePrice(){
   var timeout;
   $('tr input').on('input', function () {
 
@@ -18,7 +23,6 @@ $(document).ready(function () {
     clearTimeout(timeout);
 
     timeout = setTimeout(function () {
-      // updatePrice();
       var quantity = parseFloat($(row).find('.quantity input').val());
       var price = parseFloat($(row).children('.price').text());
 
@@ -33,5 +37,17 @@ $(document).ready(function () {
     }, 500);
 
   });
+
+}
+function setAndUpdatePrice (){
+  setPrice();
+  updatePrice();
+}
+
+$(document).ready(function () {
+  
+  
+  setAndUpdatePrice ()
+  
 
 });
