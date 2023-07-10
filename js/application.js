@@ -24,7 +24,7 @@ function setPrice(){
 
 function updatePrice(){
   var timeout;
-  $('tr .quantity input').on('input', function () {
+  $(document).on('input', 'tr .quantity input', function () {
     var row = $(this).closest('tr');
     clearTimeout(timeout);
     timeout = setTimeout(function () {
@@ -44,7 +44,7 @@ function setTotalPrice(){
 
 function updateTotalPrice(){
   var timeout;
-  $('tr .quantity input').on('input', function () {
+  $(document).on('input', 'tr .quantity input', function () {
     clearTimeout(timeout);
     timeout = setTimeout(function () {
        setTotalPrice()
@@ -60,14 +60,43 @@ function setAndUpdatePrice (){
 }
 
 $(document).ready(function () {
-  
-  
+
   setAndUpdatePrice ()
 
-  $('.btn.remove').on('click', function (event) {
+  $(document).on('click', '.btn.remove', function (event) {
     $(this).closest('tr').remove();
     setTotalPrice();
   });
-  
 
+
+  $('#addButton').on('click', function (event) {
+    var name = $('#nameInput input').val();
+    var price = $('#priceInput input').val();
+
+    if (name === '' || price === '') {
+      alert("Please correctly fill out both fields.");
+      return;
+    }
+
+    if (isNaN(price)) {
+      alert("Price must be a number.");
+      return; 
+  }
+
+    var newRow ='<tr>' +
+    '<td class="name text-center">' + name + '</td>' +
+    '<td class="price text-center">' + '$' + parseFloat(price).toFixed(2) + '</td>' +
+    '<td class="quantity text-center">QTY <input type="number" value="0"/></td>' +
+    '<td class="totalPrice text-center">$0.00</td>' +
+    '<td class="text-center"><button class="btn btn-light btn-sm remove">Remove</button></td>' +
+    '</tr>';    
+    
+    $('tbody tr:last').before(newRow);
+
+    $('#nameInput input').val('');
+    $('#priceInput input').val('');
+
+  });
+
+  
 });
